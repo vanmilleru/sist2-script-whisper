@@ -2,20 +2,16 @@ from time import time
 import typer
 import os
 from sist2 import Sist2Index, print_progress
-import requests  # <-- Import requests
-# --- Removed OpenAI import ---
+import requests  
 
-# --- Manually get API key from environment ---
 API_KEY = os.environ.get("OPENAI_API_KEY","None")
 
 
-# --- Define API constants ---
 OPENAI_API_URL = "https://api.openai.com/v1/audio/transcriptions"
 HEADERS = {
     "Authorization": f"Bearer {API_KEY}"
 }
 
-# --- Removed OpenAI client initialization ---
 def whisper_stt(input_audio: str, model_name: str):
     """
     Performs speech-to-text using the OpenAI Whisper API via plain requests.
@@ -26,7 +22,7 @@ def whisper_stt(input_audio: str, model_name: str):
     WHISPER_API_LIMIT_BYTES = 512 * 1024 * 1024  # 25 MB
 
     try:
-        # === FILE SIZE VALIDATION ===
+
         # 1. Check if file exists
         if not os.path.exists(input_audio):
             print(f"Error: Audio file not found at {input_audio}")
@@ -40,7 +36,7 @@ def whisper_stt(input_audio: str, model_name: str):
             print(f"Size: {file_size / (1024*1024):.2f} MB, Limit: {WHISPER_API_LIMIT_BYTES / (1024*1024):.0f} MB.")
             print("Please use a smaller file or split the audio.")
             return None
-        # === END VALIDATION ===
+
 
         # Open the audio file in binary read mode
         with open(input_audio, "rb") as audio_file:
